@@ -52,7 +52,7 @@ spec:
     networkProfile:
       networkInterfaceConfigurations:
       - ipConfigurations:
-          name: myipconfiguration
+        - name: myipconfiguration
           subnet:
             reference:
               group: network.azure.com
