@@ -58,7 +58,6 @@ spec:
               group: network.azure.com
               kind: VirtualNetworksSubnet
               name: iacsubnet
-              namespace: vmss
         name: mynicconfig
         primary: true
     osProfile:
