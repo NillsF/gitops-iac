@@ -14,7 +14,7 @@ spec:
 apiVersion: documentdb.azure.com/v1alpha1api20210515
 kind: DatabaseAccount
 metadata:
-  name: sampledbaccount
+  name: gitopsiacdemo
   namespace: cosmosdb
 spec:
   location: westcentralus
@@ -33,7 +33,7 @@ metadata:
 spec:
   location: westcentralus
   owner:
-    name: sampledbaccount
+    name: gitopsiacdemo
   options:
     autoscaleSettings:
       maxThroughput: 4000
