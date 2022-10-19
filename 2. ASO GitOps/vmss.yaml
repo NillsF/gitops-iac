@@ -34,7 +34,7 @@ spec:
     name: iacvnet
   addressPrefix: 10.0.0.0/24
 ---
-apiVersion: compute.azure.com/v1beta20220301
+apiVersion: compute.azure.com/v1beta20201101
 kind: VirtualMachineScaleSet
 metadata:
   name: iacvmss
