@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vmss
+---
+apiVersion: resources.azure.com/v1alpha1api20200601
+kind: ResourceGroup
+metadata:
+  name: aso-vmss-demo
+  namespace: vmss
+spec:
+  location: westcentralus
+---
+apiVersion: network.azure.com/v1beta20201101
+kind: VirtualNetwork
+metadata:
+  name: iacvnet
+  namespace: vmss
+spec:
+  location: westcentralus
+  owner:
+    name: aso-vmss-rg
+  addressSpace:
+    addressPrefixes:
+      - 10.0.0.0/16
+---
+apiVersion: network.azure.com/v1beta20201101
+kind: VirtualNetworksSubnet
+metadata:
+  name: iacsubnet
+  namespace: vmss
+spec:
+  location: westcentralus
+  owner:
+    name: iacvnet
+  addressPrefix: 10.0.0.0/24
+---
+apiVersion: compute.azure.com/v1beta20220301
+kind: VirtualMachineScaleSet
+metadata:
+  name: iacvmss
+  namespace: default
+spec:
+  location: westcentralus
+  owner:
+    name: aso-vmss-rg
+  sku:
+    capacity: 1
+    name: STANDARD_D1_v2
+  upgradePolicy:
+    mode: Automatic
+  virtualMachineProfile:
+    networkProfile:
+      networkInterfaceConfigurations:
+      - ipConfigurations:
+          name: myipconfiguration
+          subnet:
+            reference:
+              group: network.azure.com
+              kind: VirtualNetworksSubnet
+              name: iacsubnet
+        name: mynicconfig
+        primary: true
+    osProfile:
+      computerNamePrefix: computer
+      adminUsername: adminUser
+      adminPassword:
+        key: password
+        name: iac-vmss-secret
+    storageProfile:
+      imageReference:
+        offer: UbuntuServer
+        publisher: Canonical
+        sku: 22.04-lts
+        version: latest
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: iac-vmss-secret
+  namespace: vmss
+type: Opaque
+data:
+  password: dGVzdGluZ1Bhc3N3b3JkMTIzIQ==
