@@ -38,7 +38,7 @@ apiVersion: compute.azure.com/v1beta20220301
 kind: VirtualMachineScaleSet
 metadata:
   name: iacvmss
-  namespace: default
+  namespace: vmss
 spec:
   location: westcentralus
   owner:
