@@ -1,25 +1,25 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: vmss
+  name: vmss2
 ---
 apiVersion: resources.azure.com/v1alpha1api20200601
 kind: ResourceGroup
 metadata:
-  name: aso-vmss-rg
-  namespace: vmss
+  name: aso-vmss2-rg
+  namespace: vmss2
 spec:
   location: westcentralus
 ---
 apiVersion: network.azure.com/v1beta20201101
 kind: VirtualNetwork
 metadata:
-  name: iacvnet
-  namespace: vmss
+  name: iacvnet2
+  namespace: vmss2
 spec:
   location: westcentralus
   owner:
-    name: aso-vmss-rg
+    name: aso-vmss2-rg
   addressSpace:
     addressPrefixes:
       - 10.0.0.0/16
@@ -27,22 +27,22 @@ spec:
 apiVersion: network.azure.com/v1beta20201101
 kind: VirtualNetworksSubnet
 metadata:
-  name: iacsubnet
-  namespace: vmss
+  name: iacsubnet2
+  namespace: vmss2
 spec:
   owner:
-    name: iacvnet
+    name: iacvnet2
   addressPrefix: 10.0.0.0/24
 ---
 apiVersion: compute.azure.com/v1beta20201201
 kind: VirtualMachineScaleSet
 metadata:
   name: iacvmss
-  namespace: vmss
+  namespace: vmss2
 spec:
   location: westcentralus
   owner:
-    name: aso-vmss-rg
+    name: aso-vmss2-rg
   sku:
     capacity: 1
     name: STANDARD_D1_v2
@@ -57,7 +57,7 @@ spec:
             reference:
               group: network.azure.com
               kind: VirtualNetworksSubnet
-              name: iacsubnet
+              name: iacsubnet2
         name: mynicconfig
         primary: true
     osProfile:
@@ -77,7 +77,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: iac-vmss-secret
-  namespace: vmss
+  namespace: vmss2
 type: Opaque
 data:
   password: dGVzdGluZ1Bhc3N3b3JkMTIzIQ==
