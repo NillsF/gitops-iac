@@ -68,7 +68,7 @@ spec:
         name: iac-vmss-secret
     storageProfile:
       imageReference:
-        offer: UbuntuServer
+        offer: 0001-com-ubuntu-server-focal
         publisher: Canonical
         sku: 20.04-lts
         version: latest
