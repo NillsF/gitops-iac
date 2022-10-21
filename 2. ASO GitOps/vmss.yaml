@@ -31,7 +31,7 @@ metadata:
   namespace: vmss2
 spec:
   owner:
-    name: iacvnet2
+    name: iacvnet
   addressPrefix: 10.0.0.0/24
 ---
 apiVersion: compute.azure.com/v1beta20201201
