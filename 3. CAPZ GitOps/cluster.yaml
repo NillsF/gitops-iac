@@ -1,8 +1,8 @@
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
-  name: gitopscluster
-  namespace: default
+  name: denvercluster
+  namespace: gitopslive
 spec:
   clusterNetwork:
     services:
@@ -11,24 +11,24 @@ spec:
   controlPlaneRef:
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
     kind: AzureManagedControlPlane
-    name: gitopscluster
+    name: denvercluster
   infrastructureRef:
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
     kind: AzureManagedCluster
-    name: gitopscluster
+    name: denvercluster
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: AzureManagedControlPlane
 metadata:
-  name: gitopscluster
-  namespace: default
+  name: denvercluster
+  namespace: gitopslive
 spec:
   identityRef:
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
     kind: AzureClusterIdentity
     name: cluster-identity
   location: westcentralus
-  resourceGroupName: gitopscluster
+  resourceGroupName: denvercluster
   sshPublicKey: ""
   subscriptionID: d19dddf3-9520-4226-a313-ae8ee08675e5
   version: v1.23.12
@@ -36,23 +36,23 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: AzureManagedCluster
 metadata:
-  name: gitopscluster
-  namespace: default
+  name: denvercluster
+  namespace: gitopslive
 ---
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachinePool
 metadata:
   name: pool0
-  namespace: default
+  namespace: gitopslive
 spec:
-  clusterName: gitopscluster
+  clusterName: denvercluster
   replicas: 2
   template:
     metadata: {}
     spec:
       bootstrap:
         dataSecretName: ""
-      clusterName: gitopscluster
+      clusterName: denvercluster
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
         kind: AzureManagedMachinePool
@@ -63,7 +63,7 @@ apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: AzureManagedMachinePool
 metadata:
   name: pool0
-  namespace: default
+  namespace: gitopslive
 spec:
   enableNodePublicIP: false
   mode: System
@@ -74,16 +74,16 @@ apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachinePool
 metadata:
   name: pool1
-  namespace: default
+  namespace: gitopslive
 spec:
-  clusterName: gitopscluster
+  clusterName: denvercluster
   replicas: 2
   template:
     metadata: {}
     spec:
       bootstrap:
         dataSecretName: ""
-      clusterName: gitopscluster
+      clusterName: denvercluster
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
         kind: AzureManagedMachinePool
@@ -94,7 +94,7 @@ apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: AzureManagedMachinePool
 metadata:
   name: pool1
-  namespace: default
+  namespace: gitopslive
 spec:
   enableNodePublicIP: false
   mode: User
@@ -107,12 +107,12 @@ metadata:
   labels:
     clusterctl.cluster.x-k8s.io/move-hierarchy: "true"
   name: cluster-identity
-  namespace: default
+  namespace: gitopslive
 spec:
   allowedNamespaces: {}
   clientID: 128eae80-a421-48a8-896e-a0927f0e0155
   clientSecret:
     name: cluster-identity-secret
-    namespace: default
+    namespace: gitopslive
   tenantID: 72f988bf-86f1-41af-91ab-2d7cd011db47
   type: ServicePrincipal
