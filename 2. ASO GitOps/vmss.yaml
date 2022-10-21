@@ -44,7 +44,7 @@ spec:
   owner:
     name: aso-vmss-rg2
   sku:
-    capacity: 1
+    capacity: 3
     name: STANDARD_D1_v2
   upgradePolicy:
     mode: Automatic
